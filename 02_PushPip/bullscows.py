@@ -2,7 +2,7 @@ from random import choice
 import urllib.request
 import argparse
 
-words = ["папка", "ропот", "котик", "крыса", "банка", "кепка", "книга"]
+words = [ "ропот", "котик", "потоп", "полка", "попка"]
 
 def bullscows(version: str, mystery: str):
     bull = cow = 0
@@ -11,7 +11,8 @@ def bullscows(version: str, mystery: str):
         if version[i] == mystery[i]:
             bull += 1
             bull_l.append(mystery[i])
-        elif (version[i] in mystery) and (version[i] not in bull_l):
+    for i in range(args.lenght):
+        if (version[i] in mystery) and (version[i] != mystery[i]) and (version[i] not in bull_l):
             cow +=1
     return (bull, cow)
 
