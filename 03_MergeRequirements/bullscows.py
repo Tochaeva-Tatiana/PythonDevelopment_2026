@@ -1,6 +1,7 @@
 from random import choice
 import urllib.request
 import argparse
+from cowsay import cowsay
 
 words = [ "ропот", "котик", "потоп", "полка", "попка"]
 
@@ -26,7 +27,7 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
         res = bullscows(word, true_word)
         inform("Быки: {}, Коровы: {}", res[0], res[1])
         if res == (args.lenght, 0):
-            ask(f"Поздравляю! Количество попыток: {count}")
+            ask(str(count))
             break
         
 
@@ -42,7 +43,7 @@ def ask(prompt: str, valid: list[str] = None) -> str:
 
 
 def inform(format_string: str, bulls: int, cows: int) -> None:
-    print(format_string.format(bulls, cows))
+    print(cowsay(format_string.format(bulls, cows)))
 
 parser = argparse.ArgumentParser()
 parser.add_argument("dictionary", default=None)
