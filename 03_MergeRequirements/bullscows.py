@@ -33,11 +33,11 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
 
 
 def ask(prompt: str, valid: list[str] = None) -> str:
-    print(prompt)
+    print(cowsay(prompt))
     if valid != None:
         word = input()
         while word not in valid:
-            print(prompt)
+            print(cowsay(prompt))
             word = input()
         return word
 
