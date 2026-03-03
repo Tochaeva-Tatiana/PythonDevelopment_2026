@@ -57,12 +57,9 @@ try:
 except FileNotFoundError:
     try:
         with urllib.request.urlopen(args.dictionary) as response:
-            # Читаем данные, декодируем в utf-8 (или другую кодировку, если нужно)
             data = response.read().decode('utf-8')
-            # Разбиваем на строки, убираем пустые и пробельные
             words = [line.strip() for line in data.splitlines() if line.strip() and len(line.strip()) == args.lenght]
     except:
         print("Не удалось открыть")
 
-# if type(args.dictionary)
 gameplay(ask, inform, words)
