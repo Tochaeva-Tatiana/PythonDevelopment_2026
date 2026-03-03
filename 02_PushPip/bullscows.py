@@ -21,7 +21,7 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
         count += 1
         word = ask("Введите слово: ", words)
         res = bullscows(word, true_word)
-        print("Быки: {}, Коровы: {}", res[0], res[1]) # inform("Быки: {}, Коровы: {}", b, c)
+        inform("Быки: {}, Коровы: {}", res[0], res[1]) # inform("Быки: {}, Коровы: {}", b, c)
         if res == (lenght, 0):
             ask(f"Поздравляю! Количество попыток: {count}")
             break
@@ -39,6 +39,7 @@ def ask(prompt: str, valid: list[str] = None) -> str:
 
 
 def inform(format_string: str, bulls: int, cows: int) -> None:
-    pass
+    print(format_string.format(bulls, cows))
+
 
 gameplay(ask, inform, words)
