@@ -1,7 +1,7 @@
 from random import choice
 
 lenght = 5
-words = ["привет", "ропот", "котик", "крыса", "банка", "кепка"]
+words = ["папка", "ропот", "котик", "крыса", "банка", "кепка"]
 def bullscows(version: str, mystery: str):
     bull = cow = 0
     bull_l = []
@@ -16,26 +16,29 @@ def bullscows(version: str, mystery: str):
 
 def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
     true_word = choice(words)
+    count = 0
     while True:
+        count += 1
         word = ask("Введите слово: ", words)
         res = bullscows(word, true_word)
-        print(f"Быки: {res[0]}, Коровы: {res[1]}") # inform("Быки: {}, Коровы: {}", b, c)
+        print("Быки: {}, Коровы: {}", res[0], res[1]) # inform("Быки: {}, Коровы: {}", b, c)
         if res == (lenght, 0):
-            print("УРА", word) 
+            ask(f"Поздравляю! Количество попыток: {count}")
             break
+        
 
 
 def ask(prompt: str, valid: list[str] = None) -> str:
     print(prompt)
-    word = input()
     if valid != None:
+        word = input()
         while word not in valid:
             print(prompt)
             word = input()
-    return word
+        return word
 
 
-def inform():
-    pass 
+def inform(format_string: str, bulls: int, cows: int) -> None:
+    pass
 
 gameplay(ask, inform, words)
