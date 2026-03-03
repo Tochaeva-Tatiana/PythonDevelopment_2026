@@ -17,8 +17,7 @@ def bullscows(version: str, mystery: str):
 def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
     true_word = choice(words)
     while True:
-        print("Введите слово:")  #ask("Введите слово: ", words)
-        word = input()
+        word = ask("Введите слово: ", words)
         res = bullscows(word, true_word)
         print(f"Быки: {res[0]}, Коровы: {res[1]}") # inform("Быки: {}, Коровы: {}", b, c)
         if res == (lenght, 0):
@@ -26,11 +25,17 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
             break
 
 
-def ask():
-    pass
+def ask(prompt: str, valid: list[str] = None) -> str:
+    print(prompt)
+    word = input()
+    if valid != None:
+        while word not in valid:
+            print(prompt)
+            word = input()
+    return word
 
 
 def inform():
     pass 
 
-# gameplay(ask, inform, words)
+gameplay(ask, inform, words)
