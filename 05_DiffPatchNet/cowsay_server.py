@@ -53,6 +53,14 @@ async def handler(reader, writer):
                         else:
                             await send(writer, 'No one is online')
 
+                    case ['cows']:
+                        free = sorted(available_cows - set(users.keys()))
+                        if free:
+                            await send(writer, ' '.join(free))
+                        else:
+                            await send(writer, 'No free cows')
+
+
                     case ['quit']:
                         await send(writer, 'Bye')
                         break
