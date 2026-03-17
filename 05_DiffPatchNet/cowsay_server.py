@@ -77,7 +77,21 @@ async def handler(reader, writer):
                         await send(writer, f'Logged in as {my_name}')
                         print(f'{my_name} logged in')
 
-                    
+                    case ['say', target, *msg_parts]:
+                        if my_name is None:
+                            await send(writer, 'NoAccessError: please login first')
+                            continue
+                        if not msg_parts:
+                            await send(writer, 'Usage: say cow message')
+                            continue
+                        if target not in users:
+                            await send(writer, f'NoUserError: no user named {target}')
+                            continue
+
+                        msg = ' '.join(msg_parts)
+                        rendered = cowsay.cowsay(msg, cow=my_name)
+                        await users[target].put(f'Message from {my_name}:\n{rendered}')
+                        await send(writer, 'OK')
 
                     case ['quit']:
                         await send(writer, 'Bye')
