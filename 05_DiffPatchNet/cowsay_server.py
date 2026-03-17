@@ -93,6 +93,23 @@ async def handler(reader, writer):
                         await users[target].put(f'Message from {my_name}:\n{rendered}')
                         await send(writer, 'OK')
 
+                    case ['yield', *msg_parts]:
+                        if my_name is None:
+                            await send(writer, 'NoAccessError: please login first')
+                            continue
+                        if not msg_parts:
+                            await send(writer, 'Usage: yield message')
+                            continue
+
+                        msg = ' '.join(msg_parts)
+                        rendered = cowsay.cowsay(msg, cow=my_name)
+
+                        for name, queue in users.items():
+                            if name != my_name:
+                                await queue.put(f'Broadcast from {my_name}:\n{rendered}')
+
+                        await send(writer, 'OK')
+
                     case ['quit']:
                         await send(writer, 'Bye')
                         break
