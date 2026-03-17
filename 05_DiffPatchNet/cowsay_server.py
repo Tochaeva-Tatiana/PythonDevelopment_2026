@@ -60,6 +60,24 @@ async def handler(reader, writer):
                         else:
                             await send(writer, 'No free cows')
 
+                    case ['login', cow_name]:
+                        if my_name is not None:
+                            await send(writer, 'LoginError: already logged in')
+                            continue
+                        if cow_name not in available_cows:
+                            await send(writer, 'LoginError: unknown cow')
+                            continue
+                        if cow_name in users:
+                            await send(writer, 'LoginError: cow is already taken')
+                            continue
+
+                        my_name = cow_name
+                        users[my_name] = my_queue
+                        peer = my_name
+                        await send(writer, f'Logged in as {my_name}')
+                        print(f'{my_name} logged in')
+
+                    
 
                     case ['quit']:
                         await send(writer, 'Bye')
